@@ -11,6 +11,7 @@ import com.example.demo.entidades.Category;
 import com.example.demo.entidades.Client;
 import com.example.demo.entidades.OrderItem;
 import com.example.demo.entidades.Orders;
+import com.example.demo.entidades.Payment;
 import com.example.demo.entidades.Product;
 import com.example.demo.enums.OrderStatus;
 import com.example.demo.repository.CategoryRepository;
@@ -71,6 +72,10 @@ public class Test_config implements CommandLineRunner {
         OrderItem oi1 = new OrderItem(ord1, prod1, 1, prod1.getPrice());
         OrderItem oi2 = new OrderItem(ord2, prod2, 2, prod2.getPrice());
         orderItemRepositoy.saveAll(Arrays.asList(oi1,oi2));
+
+        Payment pay1 = new Payment(null, Instant.parse("2025-07-18T16:08:40Z"), ord1);
+        ord1.setPayment(pay1);
+        ordersRepository.save(ord1);
         
     }
 }
