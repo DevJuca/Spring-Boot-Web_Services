@@ -2,6 +2,8 @@ package com.example.demo.entidades;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.example.demo.enums.OrderStatus;
 
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +33,9 @@ public class Orders implements Serializable{
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @OneToMany(mappedBy = "id.orders")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Orders(){}
 
@@ -74,6 +80,10 @@ public class Orders implements Serializable{
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
 

@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.entidades.Category;
 import com.example.demo.entidades.Client;
+import com.example.demo.entidades.OrderItem;
 import com.example.demo.entidades.Orders;
 import com.example.demo.entidades.Product;
 import com.example.demo.enums.OrderStatus;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ClientRepository;
+import com.example.demo.repository.OrderItemRepositoy;
 import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.ProductRepository;
 
@@ -32,6 +34,9 @@ public class Test_config implements CommandLineRunner {
 
     @Autowired 
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private OrderItemRepositoy orderItemRepositoy;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,6 +66,11 @@ public class Test_config implements CommandLineRunner {
         Orders ord2 = new Orders(null, Instant.parse("2025-07-18T15:58:45Z"), OrderStatus.PAID,cli2);
         ordersRepository.saveAll(Arrays.asList(ord1,ord2));
 
+
+        // OrderItem.
+        OrderItem oi1 = new OrderItem(ord1, prod1, 1, prod1.getPrice());
+        OrderItem oi2 = new OrderItem(ord2, prod2, 2, prod2.getPrice());
+        orderItemRepositoy.saveAll(Arrays.asList(oi1,oi2));
         
     }
 }
