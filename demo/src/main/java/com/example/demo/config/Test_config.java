@@ -46,6 +46,11 @@ public class Test_config implements CommandLineRunner {
         Product prod2 = new Product(0, "Headset Gamer HyperX Cloud Stinger", "Drivers 50mm, P3, black", 184.99, null);
         productRepository.saveAll(Arrays.asList(prod1,prod2));
 
+        prod1.getCategory().add(cat1);
+        prod2.getCategory().add(cat1);
+
+        productRepository.saveAll(Arrays.asList(prod1,prod2));
+
         // Clients.
         Client cli1 = new Client(null, "João Carlos", "joao@gmail.com", "1145786-4444", "12345");
         Client cli2 = new Client(null, "Larissa", "larissa@gmail.com", "1178945-1234", "54321");
@@ -56,9 +61,6 @@ public class Test_config implements CommandLineRunner {
         Orders ord2 = new Orders(null, Instant.parse("2025-07-18T15:58:45Z"), OrderStatus.PAID,cli2);
         ordersRepository.saveAll(Arrays.asList(ord1,ord2));
 
-        prod1.getCategory().add(cat1);
-        prod2.getCategory().add(cat1);
-
-        productRepository.saveAll(Arrays.asList(prod1,prod2));
+        
     }
 }
