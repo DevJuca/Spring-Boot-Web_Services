@@ -1,9 +1,9 @@
 package com.example.demo.service.ResourcesException;
 
-public class ResourcesException extends RuntimeException{
+public class ResourcesNotFoundException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
-    public ResourcesException(Object id){
+    public ResourcesNotFoundException(Object id){
         super("Resource Not Found. ID " + id);
     }
     

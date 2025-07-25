@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.demo.service.ResourcesException.DataBaseException;
-import com.example.demo.service.ResourcesException.ResourcesException;
+import com.example.demo.service.ResourcesException.ResourcesNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
     
-    @ExceptionHandler(ResourcesException.class)
-    public ResponseEntity<StandardError> resourcesException(ResourcesException e, HttpServletRequest request){
+    @ExceptionHandler(ResourcesNotFoundException.class)
+    public ResponseEntity<StandardError> resourcesException(ResourcesNotFoundException e, HttpServletRequest request){
         String error = "Resource Not Found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());

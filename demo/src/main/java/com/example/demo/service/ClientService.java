@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entidades.Client;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.service.ResourcesException.DataBaseException;
-import com.example.demo.service.ResourcesException.ResourcesException;
+import com.example.demo.service.ResourcesException.ResourcesNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClientService {
@@ -25,7 +27,7 @@ public class ClientService {
 
     public Client findByID(Long id){
         Optional<Client> obj = clientRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourcesException(id));
+        return obj.orElseThrow(() -> new ResourcesNotFoundException(id));
     }
 
     public Client insert(Client obj){
@@ -36,7 +38,7 @@ public class ClientService {
         try {
             clientRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourcesException(id);
+            throw new ResourcesNotFoundException(id);
         }catch (DataIntegrityViolationException e){
             throw new DataBaseException(e.getMessage());
         }
@@ -44,11 +46,13 @@ public class ClientService {
     }
 
     public Client update(Long id, Client obj){
-        Client entity = clientRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return clientRepository.save(entity);
-
-        
+        try {
+            Client entity = clientRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return clientRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourcesNotFoundException(id);
+        }
     }
 
     private void updateData(Client entity, Client obj) {
