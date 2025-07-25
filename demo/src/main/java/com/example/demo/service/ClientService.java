@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entidades.Client;
 import com.example.demo.repository.ClientRepository;
+import com.example.demo.service.ResourcesException.ResourcesException;
 
 @Service
 public class ClientService {
@@ -21,7 +22,7 @@ public class ClientService {
 
     public Client findByID(Long id){
         Optional<Client> obj = clientRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourcesException(id));
     }
 
     public Client insert(Client obj){
