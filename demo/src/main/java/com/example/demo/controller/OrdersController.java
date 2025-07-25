@@ -21,10 +21,10 @@ public class OrdersController {
 
     @GetMapping
     public ResponseEntity<List<Orders>> findAll(){
-        List<Orders> ord = ordersService.findAll(); // Retorna 204 se a lista estiver vazia.
+        List<Orders> ord = ordersService.findAll(); 
 
         if (ord.isEmpty()) {
-            ResponseEntity.noContent().build();
+            ResponseEntity.noContent().build(); // Retorna 204 se a lista estiver vazia.
         }
 
         return ResponseEntity.ok().body(ord);
