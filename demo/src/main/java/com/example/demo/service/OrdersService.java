@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entidades.Orders;
 import com.example.demo.repository.OrdersRepository;
+import com.example.demo.service.ResourcesException.DataBaseException;
+import com.example.demo.service.ResourcesException.ResourcesNotFoundException;
 
 @Service
 public class OrdersService {
@@ -21,6 +25,17 @@ public class OrdersService {
 
     public Orders findByID(Long id){
         Optional<Orders> obj = ordersRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourcesNotFoundException(id));
+    }
+
+    public void delete(Long id){
+        try {
+            ordersRepository.deleteById(id);
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourcesNotFoundException(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DataBaseException(e.getMessage());
+        }
     }
 }

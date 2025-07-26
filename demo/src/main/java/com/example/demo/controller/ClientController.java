@@ -28,22 +28,12 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<List<Client>> findAll(){
         List<Client> cli = clientService.findAll();
-        
-        if (cli.isEmpty()) {
-            ResponseEntity.noContent().build(); // Retorna 204 se a lista estiver vazia.
-        }
-
         return ResponseEntity.ok().body(cli);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Client> findByID(@PathVariable long id){
         Client cli = clientService.findByID(id);
-
-        if (cli == null) {
-            return ResponseEntity.notFound().build(); // Retorna o erro 404 se não for encontrado.
-        }
-
         return ResponseEntity.ok().body(cli);
     }
 

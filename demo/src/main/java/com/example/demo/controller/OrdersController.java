@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,22 +23,18 @@ public class OrdersController {
     @GetMapping
     public ResponseEntity<List<Orders>> findAll(){
         List<Orders> ord = ordersService.findAll(); 
-
-        if (ord.isEmpty()) {
-            ResponseEntity.noContent().build(); // Retorna 204 se a lista estiver vazia.
-        }
-
         return ResponseEntity.ok().body(ord);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Orders> findByID(@PathVariable Long id){
         Orders ord = ordersService.findByID(id);
-
-        if (ord == null) {
-            return ResponseEntity.notFound().build(); // Retorna o erro 404 se não for encontrado.
-        }
-
         return ResponseEntity.ok().body(ord);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        ordersService.delete(id);
+        return ResponseEntity.notFound().build();
     }
 }
