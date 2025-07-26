@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.example.demo.entidades.Category;
 import com.example.demo.entidades.Client;
@@ -21,6 +22,7 @@ import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.ProductRepository;
 
 @Configuration
+@Profile("test")
 public class Test_config implements CommandLineRunner {
 
     // Injeção dos repositorios JPA.
