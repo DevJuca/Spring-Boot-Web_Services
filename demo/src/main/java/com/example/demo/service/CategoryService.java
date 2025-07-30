@@ -24,10 +24,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    CategoryService(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
-
     public List<Category> findAll(){
         return categoryRepository.findAll();
     }
@@ -43,7 +39,7 @@ public class CategoryService {
 
     public void delete(long id){
         try {
-            clientRepository.deleteById(id);
+            categoryRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourcesNotFoundException(id);
         }catch (DataIntegrityViolationException e){
